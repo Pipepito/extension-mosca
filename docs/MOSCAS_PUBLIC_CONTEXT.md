@@ -10,11 +10,11 @@ Esta es la referencia de integración para la extensión 0.1. Describe únicamen
 - JSON es el formato de las peticiones HTTP y los mensajes WebSocket.
 - Los errores HTTP tienen la forma `{ "error": string }`.
 
-La extensión no debe conocer la dirección real del backend ni saltarse el proxy público. Las únicas excepciones del manifiesto son `localhost` y `127.0.0.1` para desarrollo.
+La extensión no debe conocer la dirección real del backend ni saltarse el proxy público. El manifiesto Chromium permite también `localhost` y `127.0.0.1` para desarrollo; Firefox limita el destino al servicio público.
 
 ## Autenticación adecuada para la extensión
 
-La extensión usa exclusivamente un token revocable con prefijo `fly_device_`. El token se envía en `Authorization: Bearer <token>` solo al solicitar acceso y permanece en `chrome.storage.local`.
+La extensión usa exclusivamente un token revocable con prefijo `fly_device_`. El token se envía en `Authorization: Bearer <token>` solo al solicitar acceso y permanece en `chrome.storage.local` (Chromium) o `browser.storage.local` (Firefox).
 
 1. `POST /api/device/simulation-ticket` valida el token.
 2. El servidor devuelve `{ ticket, expiresAt }` con un ticket aleatorio, válido durante 60 segundos y utilizable una sola vez.

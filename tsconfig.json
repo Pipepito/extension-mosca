@@ -16,6 +16,7 @@
     ],
     "types": [
       "chrome",
+      "firefox-webext-browser",
       "node",
       "vite/client"
     ]
@@ -26,6 +27,7 @@
     "vitest.config.ts",
     "tests/**/*.ts",
     "playwright.config.ts",
-    "playwright.desktop.config.ts"
+    "playwright.desktop.config.ts",
+    "playwright.firefox.config.ts"
   ]
 }

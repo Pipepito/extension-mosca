@@ -1,7 +1,7 @@
 # Arquitectura de los clientes Moskas
 
-El repositorio mantiene un núcleo común para la extensión de Chrome y los futuros
-clientes de Firefox y escritorio. Se compilan Chrome y un compañero Electron para Windows/macOS.
+El repositorio mantiene un núcleo común para las extensiones de Chromium y Firefox y el
+compañero Electron para Windows/macOS.
 Las capas viven en un proyecto TypeScript y una instalación de npm; no necesitan
 paquetes publicados ni herramientas de monorepo.
 
@@ -26,6 +26,7 @@ src/
     offscreen.ts          Construcción del runner y enlace de mensajes
     messages.ts           Mensajes y configuración propios de la extensión
     popup/                Interfaz del cliente Chrome
+  clients/firefox/        Fondo persistente, ciclo de vida, storage, mensajes y popup
   adapters/desktop/       Transporte Node, worker_threads y capacidad del sistema
   clients/desktop/        Bandeja, ventana, IPC, persistencia y energía de Electron
   clients/shared/         Retrato y estilos compartidos entre clientes
@@ -128,3 +129,13 @@ La copia de upstream sigue registrada en `docs/upstream-snapshot.json`. Al actua
 comparar protocolo y simulación con la versión de Moscas correspondiente y conservar
 las adaptaciones locales de inyección de dependencias. No sustituir el núcleo por una
 copia completa del cliente web. Mantener las licencias y los avisos de FlyWire.
+
+## Cliente Firefox
+
+`src/clients/firefox/` compila por separado a `dist-firefox/`. Manifest V2 mantiene una
+página persistente con un único runner y los adaptadores web existentes. La UI nunca
+crea una simulación; los mensajes no devuelven la credencial guardada. La restauración
+automática usa `startWhenAvailable` y el controlador serializa la persistencia, invalida
+inicios pendientes al detener y detecta pausas largas del reloj. No introduce APIs de
+Firefox en el núcleo. Véase [FIREFOX.md](FIREFOX.md) para límites de suspensión, pruebas
+con el addon real y decisiones basadas en documentación Mozilla.
