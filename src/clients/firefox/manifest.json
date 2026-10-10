@@ -1,0 +1,34 @@
+{
+  "manifest_version": 2,
+  "name": "Moskas Brain",
+  "version": "0.1.0",
+  "description": "Ejecuta el cerebro de tu mosca en Firefox y visita el jardín de moscas.lol.",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "moscas-firefox@moscas.lol",
+      "strict_min_version": "142.0",
+      "data_collection_permissions": {
+        "required": [
+          "authenticationInfo",
+          "websiteContent",
+          "websiteActivity"
+        ]
+      }
+    }
+  },
+  "permissions": [
+    "storage",
+    "https://moscas.lol/*"
+  ],
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "persistent": true
+  },
+  "browser_action": {
+    "default_title": "Moskas Brain",
+    "default_popup": "popup.html"
+  },
+  "content_security_policy": "default-src 'self'; script-src 'self'; worker-src 'self'; connect-src 'self' https://moscas.lol wss://moscas.lol; object-src 'none'; base-uri 'none'; frame-ancestors 'none'"
+}

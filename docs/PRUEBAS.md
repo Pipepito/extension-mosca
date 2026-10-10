@@ -139,7 +139,7 @@ El popup se abre como página `chrome-extension://…/popup.html`, siguiendo la 
 documentada por Playwright. No se automatiza el clic en el icono de la barra del navegador.
 Los cambios de interfaz Wi-Fi, DNS, la pausa por suspensión del sistema, periodos largos de inactividad y la cesión de control
 al jardín con una sesión web y la experiencia visual desde la barra siguen necesitando
-comprobación manual. Firefox también se probará manualmente cuando exista su cliente.
+comprobación manual. La extensión Firefox tiene una suite propia con Selenium/geckodriver; véase [FIREFOX.md](FIREFOX.md).
 
 Referencias: [extensiones en Playwright](https://playwright.dev/docs/chrome-extensions)
 y [binarios de navegador](https://playwright.dev/docs/browsers).
@@ -180,3 +180,13 @@ pasa al repetirla: el primer intento perdió el contador visible mientras avanza
 ticks; la causa de esa intermitencia no está confirmada. El escenario comprueba una única
 ventana, movimiento en el servicio y limpieza al desconectar. No se repitieron las
 suites completas de cortes en esta revisión.
+
+## Extensión Firefox
+
+`npm run test:firefox` instala `dist-firefox/` como addon real en Firefox de escritorio.
+`npm run test:firefox:live` exige un token nuevo y usa moscas.lol y el proxy CONNECT
+opaco compartido. No necesita Chrome del sistema; el escenario de cesión usa Chromium
+de Playwright. Las pruebas sin token y autenticadas se seleccionan de forma separada.
+
+Véase [FIREFOX.md](FIREFOX.md) para comandos, cobertura, perfiles temporales, reinstalación
+al reiniciar y comprobaciones físicas/manuales que la automatización no demuestra.

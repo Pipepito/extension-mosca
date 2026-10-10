@@ -21,7 +21,12 @@
     "package:desktop": "npm run build:desktop && electron-builder --config electron-builder.yml --publish never",
     "test:desktop": "npm run build:desktop && playwright test --config playwright.desktop.config.ts",
     "test:desktop:live": "npm run build && npm run build:desktop && node scripts/test-desktop-live.mjs",
-    "pretest": "npm run prepare:brain && node scripts/build-desktop.mjs"
+    "pretest": "npm run prepare:brain && node scripts/build-desktop.mjs",
+    "build:firefox": "npm run prepare:brain && npm run typecheck && node scripts/build-firefox.mjs",
+    "dev:firefox": "npm run build:firefox && node scripts/dev-firefox.mjs",
+    "test:firefox": "npm run build:firefox && playwright test --config playwright.firefox.config.ts",
+    "test:firefox:live": "npm run build && npm run build:firefox && node scripts/test-firefox-live.mjs",
+    "lint:firefox": "addons-linter dist-firefox --warnings-as-errors"
   },
   "dependencies": {
     "undici": "7.30.0",
@@ -30,10 +35,15 @@
   "devDependencies": {
     "@playwright/test": "^1.64.0",
     "@types/chrome": "^0.1.32",
+    "@types/firefox-webext-browser": "^143.0.1",
     "@types/node": "^22.18.6",
+    "@types/selenium-webdriver": "^4.35.7",
+    "addons-linter": "^10.14.0",
     "electron": "44.7.0",
     "electron-builder": "26.15.3",
     "esbuild": "0.28.2",
+    "geckodriver": "^7.0.0",
+    "selenium-webdriver": "^4.51.0",
     "typescript": "^5.9.3",
     "vite": "^7.1.7",
     "vitest": "^5.0.3"
