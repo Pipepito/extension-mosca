@@ -94,7 +94,7 @@ else {
     session.defaultSession.setPermissionCheckHandler(() => false);
     // El renderer no necesita acceso de red, ni siquiera con una navegación accidental.
     session.defaultSession.webRequest.onBeforeRequest({ urls: ['http://*/*', 'https://*/*', 'ws://*/*', 'wss://*/*'] }, (_details, callback) => callback({ cancel: true }));
-    transport = desktopDeviceClient(!app.isPackaged ? process.env.MOSCAS_DESKTOP_PROXY : undefined);
+    transport = desktopDeviceClient(app.getVersion(), !app.isPackaged ? process.env.MOSCAS_DESKTOP_PROXY : undefined);
     if (process.platform === 'darwin') app.dock?.setIcon(join(__dirname, 'app-icon.png'));
     runner = new MoskaRunner({
       device: transport.device, clock: webClock,
@@ -128,7 +128,8 @@ else {
     const state = (): DesktopState => ({
       enabled: controller!.settings.enabled, hasToken: Boolean(controller!.settings.encryptedToken),
       launchAtLogin: app.isPackaged && loginSettings().openAtLogin,
-      loginAvailable: app.isPackaged && ['darwin', 'win32'].includes(process.platform),
+      // El ejecutable portátil se extrae en una ruta temporal: no registrarla para login.
+      loginAvailable: app.isPackaged && !process.env.PORTABLE_EXECUTABLE_FILE && ['darwin', 'win32'].includes(process.platform),
       status: controller!.status, fly: controller!.settings.enabled ? runner!.snapshot() : undefined,
       garden: controller!.settings.enabled ? runner!.gardenSnapshot() : undefined,
     });
